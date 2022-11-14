@@ -27,7 +27,7 @@ class Perceptron:
         
         return np.where(z > 0, 1, 0)
     
-    def fit(self, x, y):
+    def fit(self, X, y):
         
         self.X = X
         self.y = y
