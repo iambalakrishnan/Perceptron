@@ -3,19 +3,39 @@ import numpy as np
 import pandas as pd
 from utils.common_utils import prepare_data, save_plot
 from utils.model import Perceptron 
+import logging
 
+
+gate='OR'
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+logging.basicConfig(
+    filename=os.path.join(log_dir,"running_logs.log"),
+    level=logging.INFO,
+    format='[%(asctime)s: %(levelname)s: %(module)s]: %(message)s',
+    filemode='a'
+    )
 
 def main(data, modelName, plotName, eta, epochs):
+    """this function will fit the data into perceptron for OR gate data
 
-    df_OR = pd.DataFrame(data)
-    X, y = prepare_data(df_OR)
+    Args:
+        data (pd.DataFrame): dataframe
+        modelName (model): model name
+        plotName (png): plot name for the model
+        eta (int): 0 - 1
+        epochs (int): no of epochs
+    """
+    df = pd.DataFrame(data)
+    logging.info(f"This is the raw dataset: \n{df}")
+    X, y = prepare_data(df)
     
     model = Perceptron(eta=eta, epochs=epochs)
     model.fit(X,y)
     _ = model.total_loss()
     
     model.save(filename=modelName, model_dir="model")
-    save_plot(df_OR, model, filename=plotName)
+    save_plot(df, model, filename=plotName)
 
 if __name__ == "__main__":
     OR = {
@@ -26,6 +46,12 @@ if __name__ == "__main__":
     
     ETA = 0.3 # learning rate between 0 and 1
     EPOCHS = 10
-    main(data=OR, modelName="or.model", plotName="or.png", eta=ETA, epochs=EPOCHS)
+    try:
+        logging.info(f">>>>> Starting training for {gate} >>>>>")
+        main(data=OR, modelName="or.model", plotName="or.png", eta=ETA, epochs=EPOCHS)
+        logging.info(f"<<<<< Training completed for {gate} <<<<<\n\n")
+    except Exception as e:
+        logging.exception(e)
+        raise e
 
 
