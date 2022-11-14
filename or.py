@@ -24,7 +24,7 @@ if __name__ == "__main__":
     "y" : [0,1,1,1]
     }
     
-    ETA = 0.1 # learning rate between 0 and 1
+    ETA = 0.3 # learning rate between 0 and 1
     EPOCHS = 10
     main(data=OR, modelName="or.model", plotName="or.png", eta=ETA, epochs=EPOCHS)
 

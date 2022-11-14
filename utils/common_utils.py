@@ -8,9 +8,8 @@ def prepare_data(df, target_col="y"):
     
     y = df[target_col]
     
-    return X,y
-
-
+    return X, y 
+    
 def save_plot(df, model, filename="plot.png", plot_dir="plots"):
     def _create_base_plot(df):
         df.plot(kind="scatter", x="x1", y="x2", c="y", s=100, cmap="coolwarm")

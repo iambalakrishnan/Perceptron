@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import pandas as pd
 import joblib
 
 class Perceptron:
@@ -36,7 +35,9 @@ class Perceptron:
         print(f"X with bias : \n{X_with_bias}")
         
         for epoch in range(self.epochs):
+            print("--"*10)
             print(f"for epoch >> {epoch}")
+            print("--"*10)
             
             z = self._z_outcome(X_with_bias, self.weights)
             y_hat = self.activation_function(z)
